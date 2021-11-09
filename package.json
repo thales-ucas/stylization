@@ -1,0 +1,28 @@
+{
+  "name": "stylization",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs": "^1.0.0",
+    "babel-polyfill": "^6.26.0",
+    "pinia": "^2.0.0-rc.14",
+    "vant": "^3.2.5",
+    "vue": "^3.2.20"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.6.0",
+    "@vue/compiler-sfc": "^3.2.20",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^7.18.0",
+    "sass": "^1.42.1",
+    "sass-loader": "^12.1.0",
+    "typescript": "^4.3.2",
+    "vite": "^2.5.2",
+    "vue-tsc": "^0.2.2"
+  }
+}

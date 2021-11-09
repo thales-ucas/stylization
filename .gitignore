@@ -127,3 +127,22 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+
+## System and generated files
+.idea
+.DS_Store
+.sass-cache
+
+## Directories
+log/
+node_modules/
+bower_components/
+backup/
+dist/model/
+
+## Files
+result.xml
+npm-debug.log
+package-lock.json
