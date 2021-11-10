@@ -8,7 +8,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@tensorflow/tfjs": "^1.0.0",
+    "@tensorflow/tfjs": "^3.9.0",
     "babel-polyfill": "^6.26.0",
     "pinia": "^2.0.0-rc.14",
     "vant": "^3.2.5",
