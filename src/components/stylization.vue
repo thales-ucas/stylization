@@ -9,20 +9,19 @@
       <fieldset>
         <legend>请选择原始图片</legend>
         <van-uploader :after-read="onAfterRead" />
-        <div><img ref="contentImg" :src="contentImgSrc" class="style-img" crossorigin="anonymous"/></div>
+        <div><img ref="contentImg" :src="contentImgSrc" alt="contentImgSrc" class="style-img" crossorigin="anonymous"/></div>
       </fieldset>
       <fieldset>
         <legend>请选择风格</legend>
         <ul class="image-list">
-          <li v-for="(image, index) in styleImages" :class="{active:index==styleImageIndex}" :data-index="index" @click.stop="onChooseStyle" >
-            <img :src="image" />
+          <li v-for="(image, index) in styleImages" :key="index" :class="{active:index==styleImageIndex}" :data-index="index" @click.stop="onChooseStyle" >
+            <img :src="image" :alt="`style-${index}`" />
           </li>
         </ul>
-        <div><img ref="styleImg" :src="styleImgSrc" class="style-img" crossorigin="anonymous"/></div>
+        <div><img ref="styleImg" :src="styleImgSrc" alt="styleImgSrc" class="style-img" crossorigin="anonymous"/></div>
       </fieldset>
       <fieldset>
         <legend>最终图片</legend>
-        <div>{{msg}}</div>
         <canvas ref="stylizedImg" class="style-img" ></canvas>
         <van-field name="slider" label="强度">
           <template #input>
@@ -31,9 +30,19 @@
         </van-field>
         <van-loading v-if="stylizing" type="spinner">生成中……</van-loading>
         <van-button v-else type="primary" @click.stop="onLaunch">生成</van-button>
-        <img />
       </fieldset>
     </div>
+    <fieldset>
+      <legend>源码</legend>
+      <ul>
+        <li>
+          <a href="https://gitee.com/thales-ucas/stylization.git" target="_blank">https://gitee.com/thales-ucas/stylization.git</a>
+        </li>
+        <li>
+          <a href="https://github.com/thales-ucas/stylization.git" target="_blank">https://github.com/thales-ucas/stylization.git</a>
+        </li>
+      </ul>
+    </fieldset>
     <fieldset>
       <legend>参考文献</legend>
       <h2><a href="https://arxiv.org/abs/1508.06576" target="_blank">A Neural Algorithm of Artistic Style</a></h2>
@@ -49,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue-demi';
+import { computed, onMounted, ref } from 'vue-demi';
 import { useModel } from '@/store';
 
 const store = useModel();
@@ -67,17 +76,16 @@ function onAfterRead(fileEvt:any) {
 function onChooseStyle(e:MouseEvent) {
   store.styleImageIndex = parseInt((e.currentTarget as HTMLLIElement).dataset.index as string);
 }
-const msg = computed(() => store.msg);
-const loading = computed(() => store.loading);
-const stylizing = computed(() => store.stylizing);
-const styleImages = computed(() => store.styleImages);
-const styleImageIndex = computed(() => store.styleImageIndex);
-const contentImgSrc = computed(() => store.contentImgSrc);
-const styleImgSrc = computed(() => store.styleImgSrc);
-const styleImg = ref<InstanceType<typeof HTMLImageElement>>();
-const contentImg = ref<InstanceType<typeof HTMLImageElement>>();
-const stylizedImg = ref<HTMLCanvasElement>();
-const ratio = ref<number>(0.9);
+const loading = computed(() => store.loading); // 加载状态
+const stylizing = computed(() => store.stylizing); // 风格化状态
+const styleImages = computed(() => store.styleImages); // 风格图片列表
+const styleImageIndex = computed(() => store.styleImageIndex); // 风格图片index
+const contentImgSrc = computed(() => store.contentImgSrc); // 原始图片src
+const styleImgSrc = computed(() => store.styleImgSrc); // 风格图片src
+const styleImg = ref<InstanceType<typeof HTMLImageElement>>(); // 风格图片
+const contentImg = ref<InstanceType<typeof HTMLImageElement>>(); // 原始图片
+const stylizedImg = ref<HTMLCanvasElement>(); // 最终图片
+const ratio = ref<number>(0.9); // 风格比率
 
 /**
  * 开始创建
@@ -90,12 +98,17 @@ function onLaunch(e:MouseEvent) {
 onMounted(() => {
   store.ready();
 });
-
 </script>
 
 
 <style lang="scss" scoped>
 .ai989 {
+  article {
+    padding: 0 12px;
+    h1 {
+      text-align: center;
+    }
+  }
   .style-img {
     width: 100%;
     max-width: 800px;

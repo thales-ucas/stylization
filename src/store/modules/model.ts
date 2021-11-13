@@ -9,7 +9,7 @@ const useModel= defineStore({
     loading: <boolean>(false), // 模型加载
     stylizing: <boolean>(false), // 风格化
     msg: <string>(''), // 消息
-    contentImgSrc: <string>('./images/golden_gate.jpg'),
+    contentImgSrc: <string>('./images/helianthus.jpg'),
     styleImageIndex: <number>(0) // 所选样式图片index
   }),
   getters: {
